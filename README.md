@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teams IT Guru Chatbot</title>
+    <title>Mainstreet Capital Chatbot</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom scrollbar for chat area */
@@ -21,10 +21,8 @@
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
 
-    <!-- Chat Interface Container -->
     <div class="w-full max-w-2xl bg-white rounded-xl shadow-2xl flex flex-col h-[80vh] overflow-hidden">
 
-        <!-- Header -->
         <header class="p-4 bg-indigo-600 text-white shadow-lg flex items-center rounded-t-xl">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 mr-3">
                 <path d="M12 2a10 10 0 0 0-9.2 13.5c.3.5.7.8 1.3.8h15.2c.6 0 1-.3 1.3-.8A10 10 0 0 0 12 2z"></path>
@@ -34,23 +32,19 @@
             <h1 class="text-xl font-bold">Teams IT Guru</h1>
         </header>
 
-        <!-- Message Area -->
         <main id="chat-messages" class="flex-grow p-4 space-y-4 overflow-y-auto bg-gray-50">
-            <!-- Initial Bot Message -->
             <div class="flex justify-start">
                 <div class="bg-indigo-100 p-3 rounded-xl rounded-tl-none max-w-xs md:max-w-md shadow">
                     <p class="text-sm text-indigo-800 font-semibold">Teams IT Guru</p>
-                    <p class="text-gray-800 mt-1">Hello! I'm your AI IT Support Specialist. Ask me any technical question, and I'll find the best solution for you. For example: "How do I clear my browser cache?"</p>
+                    <p class="text-gray-800 mt-1">Hello! I'm your AI IT Support Specialist and general knowledge assistant. Ask me any technical or general question, and I'll find the best solution for you. For example: "How do I clear my browser cache?" or "What is the capital of Canada?"</p>
                 </div>
             </div>
-            <!-- Messages will be injected here -->
-        </main>
+            </main>
 
-        <!-- Input Area -->
         <footer class="p-4 bg-white border-t border-gray-200 flex items-center">
-            <input type="text" id="user-input" placeholder="Type your IT question here..."
-                   class="flex-grow p-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
-                   onkeydown="if(event.key === 'Enter') sendMessage()">
+            <input type="text" id="user-input" placeholder="Type your question here..."
+                    class="flex-grow p-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
+                    onkeydown="if(event.key === 'Enter') sendMessage()">
             <button id="send-button" onclick="sendMessage()"
                     class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-5 rounded-r-lg transition duration-150 ease-in-out shadow-md disabled:opacity-50 flex items-center justify-center">
                 <span id="send-text">Send</span>
@@ -174,12 +168,13 @@
 
             try {
                 // System Instruction defines the bot's persona and rules
-                const systemPrompt = "You are a professional IT support bot named 'Teams IT Guru'. Your goal is to provide concise, accurate, and actionable solutions to technical questions related to common software, hardware, networking, and cloud services. Use a clear, friendly, and step-by-step format when appropriate. Always use the search results provided to ensure the information is current and grounded.";
+                // MODIFIED: This instruction now allows general knowledge answers while keeping the IT Guru name.
+                const systemPrompt = "You are a helpful and knowledgeable assistant named 'Teams IT Guru'. Your primary expertise is IT support, but you are capable of answering general knowledge questions, providing summaries, and assisting with a wide range of topics. Provide concise, accurate, and friendly answers. Always use the search results provided to ensure the information is current and grounded.";
                 
                 const payload = {
                     contents: [{ parts: [{ text: query }] }],
                     
-                    // Crucial for IT support: Enable Google Search grounding
+                    // Crucial for grounding: Enable Google Search
                     tools: [{ "google_search": {} }], 
 
                     systemInstruction: {
